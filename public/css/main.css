@@ -1,0 +1,358 @@
+/* Importa as fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+/* Estilos gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: "Open Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Estilos da barra de navegação */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    height: 6rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+}
+
+.logo img {
+    width: 12rem;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.logo p {
+    position: absolute;
+    border-top: 2px solid;
+    margin-top: 0.4rem;
+    width: 20rem;
+}
+
+.search_bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 1rem;
+    max-width: 60rem;
+    flex: 1;
+}
+
+.search_bar input {
+    height: 3rem;
+    border: none;
+    border-radius: 2rem;
+    background-color: #f4f4f4;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    flex: 1;
+}
+
+.search_bar input:focus {
+    outline: none;
+    background-color: #e0e0e0;
+}
+
+.search_bar button {
+    height: 3rem;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    border-radius: 2rem;
+    padding: 0 1.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.search_bar button:hover {
+    background-color: #303f9f;
+}
+
+#logo_igreja {
+    position: fixed;
+    z-index: 0;
+    width: 8rem;
+    bottom: 1rem;
+    right: 1rem;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin: 10rem auto 3rem auto;
+    max-width: 73rem;
+    padding: 2rem;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#music-index-list {
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+}
+
+.music {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.letter-section {
+    flex: 1.5;
+    min-width: 300px;
+    margin-bottom: 2rem;
+}
+
+#lyrics {
+    margin: 1rem 0;
+}
+
+.video {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #3f51b5;
+    font-family: "Noto Sans JP", sans-serif;
+    text-align: start;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+}
+
+article {
+    margin-top: 2rem;
+}
+
+iframe {
+    width: 100%;
+    max-width: 450px;
+    height: 280px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#author {
+    color: black;
+}
+
+/* Estilos para a letra e a lista de músicas */
+h4.letter-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #3f51b5;
+    display: inline-block;
+    padding-bottom: 0.2rem;
+}
+
+.song-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.song-item {
+    margin: 0.75rem 0;
+}
+
+.song-item a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+    font-size: 1.1rem;
+}
+
+.song-item a:hover {
+    color: #3f51b5;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 2rem 0;
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #525c66;
+    border-top: 0.3rem solid black;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    z-index: 2;
+    margin-top: auto;
+}
+
+footer .dev_info {
+    text-align: center;
+    margin-left: 14rem;
+    width: 100%;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer a {
+    color: #ffc107;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .logos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+#logo_igreja_mobile {
+    display: none;
+}
+
+.options, .musicIndex, button {
+    padding: 0.5rem;
+}
+
+button {
+    width: 10rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+}
+
+#musicUrl {
+    margin-top: 1rem;
+}
+
+.subtitle {
+    font-family: "Lora", serif; 
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    color: black;
+    padding: 0 1rem 0.4rem 1rem;
+}
+
+#subtitle_desktop {
+    width: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .music {
+        flex-direction: column-reverse;
+    }
+
+    .search_bar {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .search_bar input, .search_bar button {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .letter-heading {
+        font-size: 1.5rem;
+    }
+
+    .song-item {
+        font-size: 0.9rem;
+    }
+
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        margin: 0;
+    }
+
+    .logo img {
+        width: 12rem;
+        margin-bottom: 1rem;
+    }
+
+    iframe {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    footer .dev_info {
+        margin-left: 0;
+    }
+
+    footer .logos {
+        margin-right: 0;
+    }
+
+    section {
+        margin-top: 18rem;
+    }
+    
+    #logo_igreja {
+        display: none;
+    }
+
+    #logo_igreja_mobile {
+        display: block;
+        width: 11rem;
+    }
+
+    .logo p {
+        display: none;
+    }
+
+    h2 {
+        text-align: center;
+    }
+}

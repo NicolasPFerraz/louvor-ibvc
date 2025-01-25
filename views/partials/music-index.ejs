@@ -1,0 +1,116 @@
+<style>
+    #music-index-list {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 4rem;
+        max-width: 60rem;
+        transition: margin-top 0.3s, padding-top 0.3s;
+        z-index: 999;
+        overflow-y: auto;
+        max-height: calc(100vh - 4rem);
+    }
+
+    #back {
+        margin-top: 2rem;
+        color: white;
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 7rem;
+        height: 3rem;
+        text-align: center;
+        background-color: #3f51b5;
+        border: 2px solid black;
+    }
+
+    @media (max-width: 768px) {
+        #music-index-list {
+            margin-top: 13rem;
+            max-height: calc(100vh - 13rem);
+        }
+    }
+</style>
+
+<section id="music-index-list" style="display: none;">
+    <article id="no-results-message" style="display:none;">
+        <h2 style="text-align: center;">Música não encontrada</h2>
+    </article>
+    <button id="back">Voltar</button>
+    <article>
+        <% 
+        const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover acentos
+        let currentLetter = '';
+        musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as músicas por título
+        
+        musics.forEach(song => {
+            let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
+            if (firstLetter !== currentLetter) {
+                if (currentLetter !== '') { %>
+                    </ul>
+                </div>
+                <% } 
+                currentLetter = firstLetter; %>
+                <div class="letter" id="section-<%= currentLetter %>">
+                    <h4 class="letter-heading">
+                        <%= currentLetter %>
+                    </h4>
+                    <ul class="song-list">
+                <% } %>
+                <li class="song-item">
+                    <a href="/music/<%= song.title %>">
+                        <%= song.title %> - <%= song.author %>
+                    </a>
+                </li>
+        <% }); 
+        if (currentLetter !== '') { %>
+            </ul>
+        </div>
+        <% } %>
+    </article>
+</section>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input");
+        const musicIndexList = document.getElementById("music-index-list");
+
+        let hideTimeout;
+
+        const displayMusicList = () => {
+            clearTimeout(hideTimeout);
+            musicIndexList.style.display = "block";
+        };
+
+        const hideMusicList = () => {
+            hideTimeout = setTimeout(() => {
+                musicIndexList.style.display = "none";
+            }, 200); // Atraso de 200ms
+        };
+
+        searchInput.addEventListener("input", displayMusicList);
+        searchInput.addEventListener("focusout", hideMusicList);
+
+        let lastScrollTop = 0;
+
+        window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const isMobile = window.innerWidth < 768;
+
+            if (scrollTop > lastScrollTop) {
+                // Rolando para baixo
+                console.log("Usuário rolou para baixo");
+                musicIndexList.style.marginTop = isMobile ? "5rem" : "0";
+                musicIndexList.style.paddingTop = isMobile ? "0" : "0";
+            } else {
+                // Rolando para cima
+                console.log("Usuário rolou para cima");
+                musicIndexList.style.marginTop = isMobile ? "12rem" : "5rem";
+                musicIndexList.style.paddingTop = isMobile ? "3rem" : "2rem";
+            }
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Evita valores negativos
+        });
+    });
+</script>
+<script src="/js/search.js"></script>

@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<%- include('header'); %>
+<section>
+    <h2>Índice de Músicas</h2>
+    <hr>
+    <article>
+        <!-- Campo de busca -->
+        <% 
+        const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover acentos
+        let currentLetter = '';
+
+        if (musics && musics.length > 0) { 
+            musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as músicas por título
+        
+            musics.forEach(song => {
+                let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
+                if (firstLetter !== currentLetter) {
+                    if (currentLetter !== '') { %>
+                        </ul>
+                    </div>
+                    <% } 
+                    currentLetter = firstLetter; %>
+                    <div class="letter" id="section-<%= currentLetter %>">
+                        <h4 class="letter-heading">
+                            <%= currentLetter %>
+                        </h4>
+                        <ul class="song-list">
+                    <% } %>
+                    <li class="song-item">
+                        <a href="/music/<%= song.title %>">
+                            <%= song.title %> - <%= song.author %>
+                        </a>
+                    </li>
+            <% }); 
+            if (currentLetter !== '') { %>
+                </ul>
+            </div>
+        <% } 
+        } else { %>
+            <p>Não há músicas disponíveis.</p>
+        <% } %>
+    </article>
+</section>
+<%- include('footer'); %>
+<!-- Script de pesquisa -->
+<script src="/js/search.js"></script>

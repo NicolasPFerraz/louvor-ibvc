@@ -1,0 +1,137 @@
+
+
+/* Estilos do painel de administração */
+.admin-panel {
+    padding: 2rem;
+    background-color: transparent;
+    min-height: calc(100vh - 100px); /* Ajuste para garantir que o conteúdo ocupe a altura mínima da página */
+    box-sizing: border-box;
+}
+
+.admin-panel .options {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-panel .options .btn {
+    display: inline-block;
+    background-color: #3f51b5;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+.admin-panel .options .btn a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.admin-panel .options .btn:hover {
+    background-color: #303f9f;
+}
+
+.form-panel {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+#message {
+    margin-top: 1rem;
+    color: red;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding:0.5rem;
+    background-color: #fff5f5;
+    border: 2px solid red;
+    border-radius: 5px;
+}
+
+/* Estilos do formulário de edição */
+.admin-panel .edit-music-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    height: auto;
+    margin: auto;
+    max-width: 30rem;
+    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+}
+
+.container {
+    padding: 20px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+}
+
+.container button,
+.btn-submit {
+    background-color: #3f51b5;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.container button:hover,
+.btn-submit:hover {
+    opacity: 0.8;
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: relative; /* Para evitar sobreposição do conteúdo */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+footer a {
+    color: #ffeb3b;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .admin-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .edit-music-form {
+        flex-direction: row; /* Volta a ser linha em telas maiores */
+        justify-content: center;
+        align-items: flex-start;
+    }
+}
