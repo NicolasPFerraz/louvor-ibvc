@@ -1,0 +1,20 @@
+<link rel="stylesheet" type="text/css" href="/css/form.css">
+<%- include('../header'); %>
+<section class="form-panel">
+    <div class="card">
+        <div class="container">
+            <form action="/admin/login" method="post">
+                <h2>Login</h2>
+                <label for="uname"><b>Nome de usuário</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+                <label for="psw"><b>Senha</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+                <% if (typeof message !== 'undefined') { %>
+                    <p id="message"><%= message %></p>
+                <% } %>            
+                <button type="submit">Login</button>
+            </form>
+        </div>
+      </div>
+</section>
+<%- include('../footer'); %>

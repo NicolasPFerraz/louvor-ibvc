@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <title>Louvor IBVC Franca</title>
+    <style>
+        .subtitle {
+            display: none;
+        }
+
+        .subtitle-desktop {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .subtitle {
+                display: block;
+            }
+
+            .subtitle-desktop {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="nav" style="top: 0;">
+            <div class="logo">
+                <a href="/"><img src="/assets/logo.png" alt="Logo"></a>
+                <p id="subtitle_desktop" class="subtitle-desktop subtitle">"Glorificando a Cristo e edificando a Igreja"</p>
+            </div>
+            <form action="/music/search/title" method="get" class="search_bar">
+                <input type="text" placeholder="Pesquisar por música..." id="search-input" name="title">
+                <button type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                </button>
+            </form>
+            <p id="subtitle" class="subtitle">"Glorificando a Cristo e edificando a Igreja"</p>
+        </nav>
+    </header>
+    <img src="/assets/logo_igreja.png" id="logo_igreja">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nav = document.getElementById("nav");
+            const subtitleDesktop = document.getElementById("subtitle_desktop");
+            const subtitle = document.getElementById("subtitle");
+            let prevScrollPos = window.pageYOffset;
+
+            // Hide or show nav on scroll
+            window.addEventListener('scroll', () => {
+                const currentScrollPos = window.pageYOffset;
+                nav.style.top = prevScrollPos > currentScrollPos ? "0" : "-160px";
+                prevScrollPos = currentScrollPos;
+            });
+
+            // Handle subtitle display based on URL and screen width
+            const url = window.location.pathname;
+            const isMusicPage = url.startsWith("/music");
+
+            const adaptNavbar = () => {
+                const isMobile = window.innerWidth < 768;
+
+                if (isMusicPage) {
+                    subtitle.style.display = "none";
+                    subtitleDesktop.style.display = "none";
+                } else if (isMobile) {
+                    subtitleDesktop.style.display = "none";
+                    Object.assign(subtitle.style, {
+                        display: "block",
+                        transition: 'top 0.3s',
+                        textAlign: 'start',
+                        marginTop: '16rem',
+                        borderTop: '2px solid #333',
+                        width: '100vw',
+                        zIndex: '100000',
+                        position: 'fixed',
+                        textAlign: 'center',
+                        padding: '0'
+                    });
+                } else {
+                    subtitle.style.display = "none";
+                    subtitleDesktop.style.display = "block";
+                    subtitleDesktop.style.width = "auto";
+                }
+            }
+            window.addEventListener("resize", adaptNavbar);
+            adaptNavbar();
+        });
+
+    </script>
+    <script src="/js/search.js"></script>
+</body>
+
+</html>
