@@ -38,40 +38,39 @@
     </article>
     <button id="back">Voltar</button>
     <article>
-        <% 
-        const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover acentos
-        let currentLetter = '';
-        musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as músicas por título
-        
-        musics.forEach(song => {
+        <% const normalizeString=(str)=> str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover
+            acentos
+            let currentLetter = '';
+            musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as
+            músicas por título
+
+            musics.forEach(song => {
             let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
             if (firstLetter !== currentLetter) {
-                if (currentLetter !== '') { %>
-                    </ul>
-                </div>
-                <% } 
-                currentLetter = firstLetter; %>
+            if (currentLetter !== '') { %>
+            </ul>
+            </div>
+            <% } currentLetter=firstLetter; %>
                 <div class="letter" id="section-<%= currentLetter %>">
                     <h4 class="letter-heading">
                         <%= currentLetter %>
                     </h4>
                     <ul class="song-list">
+                        <% } %>
+                            <li class="song-item">
+                                <a href="/music/<%= song.title %>">
+                                    <%= song.title %> - <%= song.author %>
+                                </a>
+                            </li>
+                            <% }); if (currentLetter !=='' ) { %>
+                    </ul>
+                </div>
                 <% } %>
-                <li class="song-item">
-                    <a href="/music/<%= song.title %>">
-                        <%= song.title %> - <%= song.author %>
-                    </a>
-                </li>
-        <% }); 
-        if (currentLetter !== '') { %>
-            </ul>
-        </div>
-        <% } %>
     </article>
 </section>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.getElementById("search-input");
         const musicIndexList = document.getElementById("music-index-list");
 
@@ -93,7 +92,7 @@
 
         let lastScrollTop = 0;
 
-        window.addEventListener("scroll", function() {
+        window.addEventListener("scroll", function () {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const isMobile = window.innerWidth < 768;
 

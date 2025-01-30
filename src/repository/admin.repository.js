@@ -5,7 +5,7 @@ require("dotenv").config();
 const hash = (password) => { return bcrypt.hash(password, 10) }
 
 const createAdminUser = async () => {
-	try {		
+	try {
 
 		let adminName = process.env.ADMIN_NAME
 		let password = process.env.ADMIN_PASS
@@ -21,7 +21,7 @@ const createAdminUser = async () => {
 
 		password = await hash(password)
 
-		const existingAdmin = await Admin.findOne({ where: { username: adminName }})
+		const existingAdmin = await Admin.findOne({ where: { username: adminName } })
 
 		if (existingAdmin) {
 			console.log("> Erro ao cadastrar administrador: já existente")
@@ -31,7 +31,7 @@ const createAdminUser = async () => {
 			}
 		}
 
-		await Admin.create({username: adminName, password: password});
+		await Admin.create({ username: adminName, password: password });
 
 		console.log("> Administrador criado com sucesso")
 		return {
@@ -42,7 +42,7 @@ const createAdminUser = async () => {
 
 	} catch (error) {
 		console.log(error)
-    
+
 		return {
 			status: 500,
 			success: false,
@@ -53,5 +53,5 @@ const createAdminUser = async () => {
 };
 
 module.exports = {
-    createAdminUser
+	createAdminUser
 };

@@ -17,7 +17,7 @@ function convertWatchToEmbedUrl(watchUrl) {
 const createMusic = async (title, author, lyrics, youtube_link) => {
 	try {
 		var embedUrl = convertWatchToEmbedUrl(youtube_link);
-		
+
 		if (youtube_link) {
 			if (embedUrl) {
 				console.log(`URL de embed: ${embedUrl}`);
@@ -111,7 +111,7 @@ const getMusicById = async (id) => {
 // Função para recuperar um registro de música por título
 const getMusicByTitle = async (title) => {
 	try {
-		const music = await Music.findOne({ where: { title: title }});
+		const music = await Music.findOne({ where: { title: title } });
 		if (!music) {
 			return {
 				status: 404,
@@ -145,7 +145,7 @@ const updateMusic = async (id, title, author, lyrics) => {
 				message: "Registro de música não encontrado"
 			}
 		}
-		await Music.update({ title, author, lyrics }, { where: { id }});
+		await Music.update({ title, author, lyrics }, { where: { id } });
 		return {
 			status: 200,
 			success: true,
@@ -172,7 +172,7 @@ const deleteMusic = async (id) => {
 				message: "Registro de música não encontrado"
 			}
 		}
-		await Music.destroy({ where: { id }});
+		await Music.destroy({ where: { id } });
 		return {
 			status: 200,
 			success: true,

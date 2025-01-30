@@ -5,13 +5,13 @@ const sequelize = new Sequelize(
     process.env.DB_USER,
     process.env.DB_PASS,
     {
-       host: '127.0.0.1',
-       dialect: 'mariadb',
-       logging: false
+        host: '127.0.0.1',
+        dialect: 'mariadb',
+        logging: false
     }
 );
 
-const authenticate = async() => {
+const authenticate = async () => {
     try {
         await sequelize.authenticate().then(() => {
             console.log("> Conexão com o banco de dados feita com sucesso");

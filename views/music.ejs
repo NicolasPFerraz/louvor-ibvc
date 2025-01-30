@@ -9,7 +9,7 @@
         text-align: start;
     }
 
-    #letter  {
+    #letter {
         text-align: start;
     }
 
@@ -20,56 +20,57 @@
     }
 </style>
 <%- include('header'); %>
-<% if (typeof musics != 'undefined') { %>
-    <%- include('partials/music-index', { musics: musics }) %>
-<% } %>
-<section class="music">
-    <% if (music) { %>
-        <article class="letter-section">
-            <h2 id="title">
-                <%= music["title"] %>
-            </h2>
-            <a href="https://www.google.com/search?q=Cantor(a) Gospel  <%= music.author %>" id="author" target="_blank">Autor(a): <%= music["author"] %></a>
-            <hr>
-            <div id="lyrics">
-                <h2 id="letter">Letra</h2>
-                <p><%- music["lyrics"].replace(/\n/g, '<br/>' ) %></p>
-                <p id="vagalume_url">
-                    <%= music["title"] %>
-                </p>
-            </div>
-            <hr>
-            <p id="musicUrl"></p>
-        </article>
-        <% if (music.youtube_link) { %>
-            <article class="video">
-                <iframe src="<%= music.youtube_link %>" id="youtube-iframe" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-            </article>
+    <% if (typeof musics !='undefined' ) { %>
+        <%- include('partials/music-index', { musics: musics }) %>
             <% } %>
-                <% } else { %>
-                    <article>
-                        <h2 style="text-align: center;">Música não encontrada</h2>
-                    </article>
-                    <% } %>
-</section>
-<script type="text/javascript">
-    /*document.addEventListener('DOMContentLoaded', function () {
-        // Obtém as strings diretamente
-        const musicName = "<%= music['title'] %>";
-        const authorName = "<%= music['author'] %>";
-
-        // Substitui espaços por traços e converte para minúsculas
-        const formatedMusicName = musicName.replace(/\s+/g, '-').toLowerCase();
-        const formatedAuthorName = authorName.replace(/\s+/g, '-').toLowerCase();
-
-        // Cria a URL formatada
-        const url = `https://vagalume.com.br/${formatedAuthorName}/${formatedMusicName}`;
-
-        // Insere a URL no elemento HTML
-        const musicUrl = document.getElementById('musicUrl');
-        musicUrl.innerHTML = `Veja mais sobre a música <a href="${url}">aqui</a>`;
-    });*/
-</script>
-<%- include('footer'); %>
+                <section class="music">
+                    <% if (music) { %>
+                        <article class="letter-section">
+                            <h2 id="title">
+                                <%= music["title"] %>
+                            </h2>
+                            <a href="https://www.google.com/search?q=Cantor(a) Gospel  <%= music.author %>" id="author"
+                                target="_blank">Autor(a): <%= music["author"] %></a>
+                            <hr>
+                            <div id="lyrics">
+                                <h2 id="letter">Letra</h2>
+                                <p><%- music["lyrics"].replace(/\n/g, '<br/>' ) %></p>
+                                <p id="vagalume_url">
+                                    <%= music["title"] %>
+                                </p>
+                            </div>
+                            <hr>
+                            <p id="musicUrl"></p>
+                        </article>
+                        <% if (music.youtube_link) { %>
+                            <article class="video">
+                                <iframe src="<%= music.youtube_link %>" id="youtube-iframe" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </article>
+                            <% } %>
+                                <% } else { %>
+                                    <article>
+                                        <h2 style="text-align: center;">Música não encontrada</h2>
+                                    </article>
+                                    <% } %>
+                </section>
+                <script type="text/javascript">
+                    /*document.addEventListener('DOMContentLoaded', function () {
+                        // Obtém as strings diretamente
+                        const musicName = "<%= music['title'] %>";
+                        const authorName = "<%= music['author'] %>";
+                
+                        // Substitui espaços por traços e converte para minúsculas
+                        const formatedMusicName = musicName.replace(/\s+/g, '-').toLowerCase();
+                        const formatedAuthorName = authorName.replace(/\s+/g, '-').toLowerCase();
+                
+                        // Cria a URL formatada
+                        const url = `https://vagalume.com.br/${formatedAuthorName}/${formatedMusicName}`;
+                
+                        // Insere a URL no elemento HTML
+                        const musicUrl = document.getElementById('musicUrl');
+                        musicUrl.innerHTML = `Veja mais sobre a música <a href="${url}">aqui</a>`;
+                    });*/
+                </script>
+                <%- include('footer'); %>

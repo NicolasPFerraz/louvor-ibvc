@@ -21,16 +21,16 @@ const generateToken = async (admin, password) => {
 }
 
 module.exports = async (username, password) => {
-    
+
     const admin = await Admin.findOne({ where: { username: username } });
 
     if (!admin) {
         return { success: false, admin: false }
     }
 
-    const isPassValid = await bcrypt.compare(password, admin.password);  
+    const isPassValid = await bcrypt.compare(password, admin.password);
 
-    if (!isPassValid) {    
+    if (!isPassValid) {
         return { success: false, admin: false }
     }
     const token = await generateToken(admin, admin.password);

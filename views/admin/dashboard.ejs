@@ -1,87 +1,90 @@
 <link rel="stylesheet" type="text/css" href="/css/admin.css">
 <%- include('../header'); %>
-<section class="admin-panel">
-    <h2>Admin Dashboard</h2>
-    <article class="options">
-        <button class="btn"><a href="/admin/music/search">Cadastrar música</a></button>
-        <% if (typeof message !== 'undefined') { %>
-            <p id="message"><b><%= message %></b></p>
-        <% } %>
-    </article>
-    <hr>
-    <article class="music-index">
-        <h3>Índice de Músicas</h3>
-        <!-- Ordenar as músicas por título -->
-        <% const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover acentos
-        let currentLetter = '';
-        musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as músicas por título
-        
-        musics.forEach(song => {
-            let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
-            if (firstLetter !== currentLetter) {
+    <section class="admin-panel">
+        <h2>Admin Dashboard</h2>
+        <article class="options">
+            <button class="btn"><a href="/admin/music/search">Cadastrar música</a></button>
+            <% if (typeof message !=='undefined' ) { %>
+                <p id="message"><b>
+                        <%= message %>
+                    </b></p>
+                <% } %>
+        </article>
+        <hr>
+        <article class="music-index">
+            <h3>Índice de Músicas</h3>
+            <!-- Ordenar as músicas por título -->
+            <% const normalizeString=(str)=> str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para
+                remover acentos
+                let currentLetter = '';
+                musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as
+                músicas por título
+
+                musics.forEach(song => {
+                let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
+                if (firstLetter !== currentLetter) {
                 if (currentLetter !== '') { %>
+                </ul>
+                </div>
+                <% } currentLetter=firstLetter; %>
+                    <div class="letter" id="section-<%= currentLetter %>">
+                        <h4 class="letter-heading">
+                            <%= currentLetter %>
+                        </h4>
+                        <ul class="song-list">
+                            <% } %>
+                                <li class="song-item">
+                                    <a href="/music/<%= song.title %>">
+                                        <%= song.title %> - <%= song.author %>
+                                    </a>
+                                    <div class="svg-icons">
+                                        <form action="/admin/music/edit/<%= song.id %>" method="get">
+                                            <button type="submit" class="btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 16 16" class="icon">
+                                                    <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                        <form action="/admin/music/delete/<%= song.id %>" method="post">
+                                            <button type="submit" class="btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 16 16" class="icon">
+                                                    <path
+                                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                                                        fill="red" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                                <% }); if (currentLetter !=='' ) { %>
                         </ul>
                     </div>
-        <% 
-                    } 
-                    currentLetter = firstLetter; 
-        %>
-                <div class="letter" id="section-<%= currentLetter %>">
-                    <h4 class="letter-heading">
-                        <%= currentLetter %>
-                    </h4>
-                    <ul class="song-list">
-        <% 
-                } 
-        %>
-                        <li class="song-item">
-                            <a href="/music/<%= song.title %>"><%= song.title %> - <%= song.author %></a>
-                            <div class="svg-icons">
-                                <form action="/admin/music/edit/<%= song.id %>" method="get">
-                                    <button type="submit" class="btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="icon">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                                <form action="/admin/music/delete/<%= song.id %>" method="post">
-                                    <button type="submit" class="btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="icon">
-                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" fill="red"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-        <% 
-            }); 
-            if (currentLetter !== '') { 
-        %>
-                    </ul>
-                </div>
-        <% } %>
-    </article>
-</section>
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        const message = document.getElementById("message");
-        const success = "<%= success %>"
+                    <% } %>
+        </article>
+    </section>
+    <script src="/js/search.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const message = document.getElementById("message");
+            const success = "<%= success %>"
 
-        if (message.textContent) {
-            message.style.display = "block";
-            if (success == "false") {
-                message.style.backgroundColor = "#fff5f5";
-                message.style.border = "2px solid red";
-                message.style.color = "red"
+            if (message.textContent) {
+                message.style.display = "block";
+                if (success == "false") {
+                    message.style.backgroundColor = "#fff5f5";
+                    message.style.border = "2px solid red";
+                    message.style.color = "red"
+                } else {
+                    message.style.backgroundColor = "lightgreen";
+                    message.style.border = "2px solid green";
+                    message.style.color = "green"
+                }
             } else {
-                message.style.backgroundColor = "lightgreen";
-                message.style.border = "2px solid green";
-                message.style.color = "green"
+                message.style.display = "none";
             }
-        } else {
-            message.style.display = "none";
-        }
-    });
-</script>
-<%- include('../footer'); %>
+        });
+    </script>
+    <%- include('../footer'); %>

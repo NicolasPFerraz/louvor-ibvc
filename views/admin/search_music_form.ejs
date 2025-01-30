@@ -1,19 +1,21 @@
 <link rel="stylesheet" type="text/css" href="/css/form.css">
 <%- include('../header'); %>
-<section class="form-panel">
-    <div class="card">
-        <div class="container">
-            <form action="/admin/music/search" method="post">
-                <label for="term"><b>Título da música; </b></label>
-                <input type="text" placeholder="Enter the music title" name="term" required>
-                <label for="limit"><b>Limite de músicas:</b></label>
-                <input type="number" placeholder="Enter the music limit" name="limit" required>
-                <% if (typeof message !== 'undefined') { %>
-                    <p id="message"><%= message %></p>
-                <% } %>         
-                <button type="submit">Pesquisar</button>
-            </form>
+    <section class="form-panel">
+        <div class="card">
+            <div class="container">
+                <form action="/admin/music/search" method="post">
+                    <label for="term"><b>Título da música; </b></label>
+                    <input type="text" placeholder="Enter the music title" name="term" required>
+                    <label for="limit"><b>Limite de músicas:</b></label>
+                    <input type="number" placeholder="Enter the music limit" name="limit" required>
+                    <% if (typeof message !=='undefined' ) { %>
+                        <p id="message">
+                            <%= message %>
+                        </p>
+                        <% } %>
+                            <button type="submit">Pesquisar</button>
+                </form>
+            </div>
         </div>
-      </div>
-</section>
-<%- include('../footer'); %>
+    </section>
+    <%- include('../footer'); %>

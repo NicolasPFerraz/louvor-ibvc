@@ -17,12 +17,12 @@ const loginUser = async (req, res) => {
         if (admin.success) {
             res.header('authorization', 'Bearer ' + admin.token);
             res.set('Authorization', 'Bearer ', admin.token);
-            res.cookie('adminToken','Bearer '+ admin.token, { //salva token no cliente em um cookie
+            res.cookie('adminToken', 'Bearer ' + admin.token, { //salva token no cliente em um cookie
                 signed: true,
                 maxAge: 3600000, // 1 hora
                 secure: false, //usando server localhost que nao usa HTTPS, antes de subir para prod trocar para true
-                httpOnly:true
-            })  
+                httpOnly: true
+            })
 
             return res.redirect("/admin");
         } else {
@@ -133,7 +133,7 @@ const importMusic = async (req, res) => {
         if (!create.success) {
             return getAllMusic(req, res, create.message, 400, false);
         }
-        
+
         console.log("> New music added");
         return getAllMusic(req, res, create.message, 201, true);
     } catch (err) {
@@ -178,16 +178,16 @@ const updateMusic = async (req, res) => {
         if (!music) {
             return res.status(404).json({ success: false, message: music.message });
         }
-        
+
         const updatedMusic = await musicRepository.updateMusic(id, title, author, lyrics, youtube_link);
-        
+
         if (updatedMusic.success) {
             return getAllMusic(req, res, "Música editada com sucesso", 200)
         } else {
-            return res.status(400).render("admin/edit_music", { 
-                success: false, 
+            return res.status(400).render("admin/edit_music", {
+                success: false,
                 message: "Campos inválidos",
-                music: { title, author, lyrics, youtube_link} 
+                music: { title, author, lyrics, youtube_link }
             });
         }
     } catch (error) {

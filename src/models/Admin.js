@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const syncTable = async() => {
+const syncTable = async () => {
     try {
         await sequelize.sync({ force: false }).then(() => {
             console.log("> Tabela Admin criada com sucesso");
@@ -19,8 +19,9 @@ const Admin = sequelize.define("admin", {
     password: {
         type: DataTypes.STRING,
         allowNull: false
-    }},  {
-        tableName: 'admin' 
+    }
+}, {
+    tableName: 'admin'
 });
 
 syncTable();

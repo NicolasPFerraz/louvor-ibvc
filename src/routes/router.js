@@ -10,7 +10,7 @@ router.use("/admin", adminRouter)
 router.use("/music", musicRouter)
 
 /* If a request url doesn't exists */
-router.use((req, res, ) => {
+router.use((req, res) => {
     res.status(404).json({ message: "Sorry, the requested resource could not be found." });
 });
 

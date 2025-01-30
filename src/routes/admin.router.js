@@ -37,7 +37,7 @@ router.post("/music/import/:id", verifyUser, (req, res) => {
     adminController.importMusic(req, res);
 });
 
-router.post("/music/delete/:id", verifyUser,(req, res) => {
+router.post("/music/delete/:id", verifyUser, (req, res) => {
     adminController.deleteMusic(req, res);
 })
 

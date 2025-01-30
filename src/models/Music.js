@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const bcrypt = require("bcrypt")
 
-const syncTable = async() => {
+const syncTable = async () => {
     try {
         await sequelize.sync({ force: false }).then(() => {
             console.log("> Tabela Music criada com sucesso");

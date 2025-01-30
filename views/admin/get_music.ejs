@@ -1,25 +1,25 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <%- include('../header'); %>
-<section>
-    <% if (music) { %>
-        <article>
-            <h2>
-                <%= music["name"] %>
-            </h2>
-            <p id="author">Autor(a): <%= music["text"]  %>
-            </p>
-        </article>
-        <hr>
-        <article>
-            <div id="lyrics">
-                <h3>Letra:</h3>
-                <p><%- music["lyrics"].replace(/\n/g, '<br/>' ) %></p>
-            </div>
-        </article>
-    <% } else { %>
-        <article>
-            <h2 style="text-align: center;"> Música não encontrada</h2>
-        </article>
-    <%  } %>
-</section>
-<%- include('../footer'); %>
+    <section>
+        <% if (music) { %>
+            <article>
+                <h2>
+                    <%= music["name"] %>
+                </h2>
+                <p id="author">Autor(a): <%= music["text"] %>
+                </p>
+            </article>
+            <hr>
+            <article>
+                <div id="lyrics">
+                    <h3>Letra:</h3>
+                    <p><%- music["lyrics"].replace(/\n/g, '<br/>' ) %></p>
+                </div>
+            </article>
+            <% } else { %>
+                <article>
+                    <h2 style="text-align: center;"> Música não encontrada</h2>
+                </article>
+                <% } %>
+    </section>
+    <%- include('../footer'); %>

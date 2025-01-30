@@ -7,7 +7,7 @@ const router = require("./routes/router");
 const adminRepository = require("./repository/admin.repository")
 
 require("dotenv").config();
-const port = process.env.PORT || 3001; 
+const port = process.env.PORT || 3001;
 const host = 'localhost';
 
 // cookie parser config

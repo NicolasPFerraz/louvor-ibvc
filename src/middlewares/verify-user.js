@@ -4,14 +4,14 @@ require("dotenv").config();
 const secretKey = process.env.SECRET_KEY || "secret_key";
 
 module.exports = (req, res, next) => {
-	
+
 	const singedCookie = req.signedCookies["adminToken"]
 	req.headers['authorization'] = singedCookie;
 	console.log(singedCookie)
 
 	if (req.headers['authorization'] === undefined) {
 		return res.status(403).send("Acesso não autorizado");
-	}  
+	}
 	const token = req.headers['authorization'].split(" ");
 
 	if (!token) {

@@ -114,29 +114,29 @@
 </style>
 
 <%- include('../header'); %>
-<section>
-    <article>
-        <h2>Músicas encontradas</h2>
-        <hr>
-        <ul>
-            <% musicList.forEach(song => { %>
-                <li>
-                    <form action="/admin/music/import/<%= song.id %>" method="POST" style="display: inline;">
+    <section>
+        <article>
+            <h2>Músicas encontradas</h2>
+            <hr>
+            <ul>
+                <% musicList.forEach(song=> { %>
+                    <li>
+                        <form action="/admin/music/import/<%= song.id %>" method="POST" style="display: inline;">
                             <p>
                                 Nome: <%= song.title %>
-                            </p> 
+                            </p>
                             <p>
-                                Autor(a):  <%= song.band %>
+                                Autor(a): <%= song.band %>
                             </p>
                             <a href="https://www.vagalume.com.br<%= song.url %>" target="_blank">Link da letra</a>
                             <hr>
                             <input type="text" placeholder="Insira o link do youtube" name="youtube_link">
                             <br>
                             <button type="submit" class="music-link-button">Importar</button>
-                    </form>
-                </li>
-            <% }); %>
-        </ul>
-    </article>
-</section>
-<%- include('../footer'); %>
+                        </form>
+                    </li>
+                    <% }); %>
+            </ul>
+        </article>
+    </section>
+    <%- include('../footer'); %>
