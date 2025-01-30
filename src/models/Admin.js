@@ -4,10 +4,10 @@ const sequelize = require("../config/database");
 const syncTable = async() => {
     try {
         await sequelize.sync({ force: false }).then(() => {
-            console.log("> Admin table created successfully");
+            console.log("> Tabela Admin criada com sucesso");
         });
     } catch (err) {
-        console.log("> [ERROR] Unable to create Admin table: ", err);
+        console.log("> [ERRO] Não foi possível criar a tabela Admin: ", err);
     };
 };
 

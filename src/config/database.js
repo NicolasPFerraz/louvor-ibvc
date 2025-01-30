@@ -14,10 +14,10 @@ const sequelize = new Sequelize(
 const authenticate = async() => {
     try {
         await sequelize.authenticate().then(() => {
-            console.log("> Database connection has been established successfully");
+            console.log("> Conexão com o banco de dados feita com sucesso");
         });
     } catch (err) {
-        console.log("> [ERROR] Unable to connect to the database: ", err);
+        console.log("> [ERRO] Não foi possível conectar ao banco de dados: ", err);
     }
 }
 

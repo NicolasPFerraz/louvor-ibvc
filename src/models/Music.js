@@ -5,10 +5,10 @@ const bcrypt = require("bcrypt")
 const syncTable = async() => {
     try {
         await sequelize.sync({ force: false }).then(() => {
-            console.log("> Music table created successfully");
+            console.log("> Tabela Music criada com sucesso");
         });
     } catch (err) {
-        console.log("> [ERROR] Unable to create Music table: ", err);
+        console.log("> [ERRO] Não foi possível criar a tabela Music: ", err);
     };
 };
 
