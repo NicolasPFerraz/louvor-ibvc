@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 require("dotenv").config()
 const sequelize = new Sequelize(
-    'louvor_ibvc',
-    'root',
+    process.env.DB_NAME,
+    process.env.DB_USER,
     process.env.DB_PASS,
     {
        host: '127.0.0.1',

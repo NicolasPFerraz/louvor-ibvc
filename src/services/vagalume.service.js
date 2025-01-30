@@ -1,3 +1,4 @@
+require("dotenv").config();
 const vagalumeKey = process.env.VAGALUME_KEY;
 
 /**
@@ -8,12 +9,15 @@ const vagalumeKey = process.env.VAGALUME_KEY;
 
 async function search(term, limit = 0) {
 
-    const api = `https://api.vagalume.com.br/search.excerpt?apikey=${vagalumeKey}&q=${term}&limit=${limit}`;
+    const api = `https://api.vagalume.com./*  */br/search.excerpt?apikey=${vagalumeKey}&q=${term}&limit=${limit}`;
     
     return await fetch(api)
         .then(response => {
             // Check if the request was successful (status code 200)
             console.log(`> Vagalume API fetched`)
+            console.log(vagalumeKey)
+            console.log(response)
+
             if (!response.ok) {
                 return { success: false, message: "Network response was not ok" }
             }
@@ -21,11 +25,13 @@ async function search(term, limit = 0) {
                 success: true,
                 response
             }
-        }).catch(error => {
+        }).catch((error) => {
             // Handle any errors that occurred during the fetch
+            console.log(error)
             return { 
                 success: false, 
-                message: "There was a problem with the fetch operation"
+                message: "There was a problem with the fetch operation",
+                error: error
             }
         });
 }
@@ -49,11 +55,13 @@ async function getMusic(id) {
                 success: true,
                 response
             }
-        }).catch(error => {
+        }).catch((error) => {
             // Handle any errors that occurred during the fetch
+            console.log(error)
             return { 
                 success: false, 
-                message: "There was a problem with the fetch operation"
+                message: "There was a problem with the fetch operation",
+                error: error
             }
         });
 }
