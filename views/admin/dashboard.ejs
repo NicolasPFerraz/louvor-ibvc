@@ -1,8 +1,8 @@
 <link rel="stylesheet" type="text/css" href="/css/admin.css">
 <%- include('../header'); %>
 <section class="admin-panel">
+    <h2>Admin Dashboard</h2>
     <article class="options">
-        <h2>Admin Dashboard</h2>
         <button class="btn"><a href="/admin/music/search">Cadastrar música</a></button>
         <% if (typeof message !== 'undefined') { %>
             <p id="message"><b><%= message %></b></p>

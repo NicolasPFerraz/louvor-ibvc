@@ -12,12 +12,12 @@
 }
 
 .admin-panel .options {
-    text-align: center;
+    text-align: start;
     margin-bottom: 1rem;
 }
 
-.admin-panel .options h2 {
-    font-size: 2rem;
+.admin-panel h2 {
+    font-size: 1.5rem;
     color: #3f51b5;
     margin-bottom: 1rem; /* Espaçamento abaixo do título */
 }
@@ -137,8 +137,8 @@
         margin-top: 18rem; /* Ajuste para espaço abaixo da navbar */
     }
 
-    .admin-panel .options h2 {
-        font-size: 1.5rem;
+    .admin-panel .options {
+        text-align: center;
     }
 
     .admin-panel .music-index h3 {
