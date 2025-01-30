@@ -51,7 +51,7 @@ nav {
     width: 20rem;
 }
 
-.search_bar {
+.nav_bar {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -60,7 +60,7 @@ nav {
     flex: 1;
 }
 
-.search_bar input {
+.nav_bar input {
     height: 3rem;
     border: none;
     border-radius: 2rem;
@@ -71,12 +71,12 @@ nav {
     flex: 1;
 }
 
-.search_bar input:focus {
+.nav_bar input:focus {
     outline: none;
     background-color: #e0e0e0;
 }
 
-.search_bar button {
+.nav_bar button {
     height: 3rem;
     border: none;
     background-color: #3f51b5;
@@ -88,8 +88,20 @@ nav {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.search_bar button:hover {
+.nav_bar button:hover {
     background-color: #303f9f;
+}
+
+.nav_bar a {
+    height: 3rem;
+    border: none;
+    background-color: #3f51b5;
+    color: #fff;
+    border-radius: 2rem;
+    padding: 0.9rem 1.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 #logo_igreja {
@@ -285,7 +297,7 @@ button {
         flex-direction: column-reverse;
     }
 
-    .search_bar {
+    .nav_bar {
         flex-direction: column;
         align-items: flex-end;
         width: 100%;
@@ -293,10 +305,15 @@ button {
         margin-left: 0;
     }
 
-    .search_bar input, .search_bar button {
+    .nav_bar input, .nav_bar button {
         width: 100%;
         margin: 0.5rem 0;
     }
+    
+    .nav_bar a {
+        display: none;
+    }
+
 
     .letter-heading {
         font-size: 1.5rem;
