@@ -62,9 +62,9 @@ nav {
 
 .nav_bar input {
     height: 3rem;
-    border: none;
+    border: 1px solid lightgray;
     border-radius: 2rem;
-    background-color: #f4f4f4;
+    background-color: #f1f1f1;
     padding: 0.5rem 1rem;
     font-size: 1rem;
     transition: background-color 0.3s;
