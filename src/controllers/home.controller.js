@@ -1,10 +1,10 @@
 const musicRepository = require("../repository/music.repository");
 
 
-module.exports = async (req, res) => {
+module.exports = async(req, res) => {
     try {
         const start = Date.now();
-        const musics = await musicRepository.getAllMusic() || [];
+        const musics = await musicRepository.getAllMusic() || []; 
         console.log(`Query time: ${Date.now() - start}ms`);
 
         return res.status(200).render('home', { musics: musics["musicIndex"] })

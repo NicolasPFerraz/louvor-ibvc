@@ -5,13 +5,11 @@
         <hr>
         <article>
             <!-- Campo de busca -->
-            <% const normalizeString=(str)=> str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para
-                remover acentos
+            <% const normalizeString=(str)=> str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Função para remover acentos
                 let currentLetter = '';
 
                 if (musics && musics.length > 0) {
-                musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as
-                músicas por título
+                musics.sort((a, b) => normalizeString(a.title).localeCompare(normalizeString(b.title))); // Ordena as músicas por título
 
                 musics.forEach(song => {
                 let firstLetter = normalizeString(song.title.charAt(0)).toUpperCase();
