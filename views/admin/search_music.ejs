@@ -116,27 +116,31 @@
 <%- include('../header'); %>
     <section>
         <article>
-            <h2>Músicas encontradas</h2>
-            <hr>
-            <ul>
-                <% musicList.forEach(song=> { %>
-                    <li>
-                        <form action="/admin/music/import/<%= song.id %>" method="POST" style="display: inline;">
-                            <p>
-                                Nome: <%= song.title %>
-                            </p>
-                            <p>
-                                Autor(a): <%= song.band %>
-                            </p>
-                            <a href="https://www.vagalume.com.br<%= song.url %>" target="_blank">Link da letra</a>
-                            <hr>
-                            <input type="text" placeholder="Insira o link do youtube" name="youtube_link">
-                            <br>
-                            <button type="submit" class="music-link-button">Importar</button>
-                        </form>
-                    </li>
-                    <% }); %>
-            </ul>
+            <% if (musicsFound) { %>
+                <h2>Músicas encontradas</h2>
+                <hr>
+                <ul>
+                    <% for (let music of musicList) { %>
+                        <li>
+                            <form action="/admin/music/import/<%= music.id %>" method="POST" style="display: inline;">
+                                <p>
+                                    Nome: <%= music.name %>
+                                </p>
+                                <p>
+                                    Autor(a): <%= music.artistName %>
+                                </p>
+                                <a href="https://www.vagalume.com.br" target="_blank">Link da letra</a>
+                                <hr>
+                                <input type="text" placeholder="Insira o link do youtube" name="youtube_link">
+                                <br>
+                                <button type="submit" class="music-link-button">Importar</button>
+                            </form>
+                        </li>
+                    <% }; %>
+                </ul>
+            <% } else { %>
+                <h2>Nenhuma música encontrada</h2>
+            <% } %>
         </article>
     </section>
     <%- include('../footer'); %>

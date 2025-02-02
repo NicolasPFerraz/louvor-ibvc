@@ -1,39 +1,39 @@
-require("dotenv").config();
-const vagalumeKey = process.env.VAGALUME_KEY;
-
 /**
  * Busca de musicas na api do vagalume
  * @param {string} term termo para busca de musicas
- * @param {int} limit quantidade de musicas por busca
  */
 
-async function search(term, limit = 0) {
 
-    const api = `https://api.vagalume.com./*  */br/search.excerpt?apikey=${vagalumeKey}&q=${term}&limit=${limit}`;
+async function getMusicList(term, limit = 0) {
+    try {
+        const api = `https://lrclib.net/api/search?q=${term}`;
+        const response = await fetch(api);
+        const body = await response.json(); // Transforma uma string JSON num objeto javascript
 
-    return await fetch(api)
-        .then(response => {
-            // Check if the request was successful (status code 200)
-            console.log(`> Vagalume API fetched`)
-            console.log(vagalumeKey)
-            console.log(response)
+        console.log(`> LRCLIB API fetched`);
 
-            if (!response.ok) {
-                return { success: false, message: "Network response was not ok" }
-            }
+        if (!response.ok) {
+            console.log("> Erro na requisição:", response.status);
             return {
-                success: true,
-                response
+                success: false, 
+                message: "Network response was not ok", 
+                status: response.status
             }
-        }).catch((error) => {
-            // Handle any errors that occurred during the fetch
-            console.log(error)
-            return {
-                success: false,
-                message: "There was a problem with the fetch operation",
-                error: error
-            }
-        });
+        }
+        return {
+            success: true,
+            body: body
+        }
+    } catch (err) {
+        // Lida com qualquer erro que possa acontecer durante a requisição
+        console.log(err);
+        return {
+            success: false,
+            message: "There was a problem with the fetch operation",
+            status: response.status,
+            err: err
+        }
+    }
 }
 
 /**
@@ -67,6 +67,6 @@ async function getMusic(id) {
 }
 
 module.exports = {
-    search,
+    getMusicList,
     getMusic
 }

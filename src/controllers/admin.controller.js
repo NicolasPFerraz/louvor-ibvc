@@ -1,7 +1,7 @@
 const Admin = require("../models/Admin");
 const authService = require("../services/auth.service");
 const musicRepository = require("../repository/music.repository");
-const vagalumeService = require("../services/vagalume.service");
+const lrclib = require("../services/lrclib");
 
 // Função para login do usuário admin
 const loginUser = async (req, res) => {
@@ -54,43 +54,43 @@ const getAllMusic = async (req, res, message = null, status = 200, success = tru
     }
 }
 
-// Função para buscar músicas usando uma API de terceiros
-const searchMusic = async (req, res) => {
-    const { term, limit } = req.body;
-
-    if (limit > 10) {
-        return res.status(404).render("admin/search_music_form", {
-            message: "Insira um valor até 10"
-        });
-    }
+// Função para buscar músicas utilizando uma API de terceiro
+const searchForMusic = async (req, res) => {
+    const { term } = req.body;
 
     try {
-        const music = await vagalumeService.search(term, limit);
-
-        if (music.success) {
-            const jsonData = await music.response.json();
-
-            for (let doc of jsonData.response.docs) {
-                delete doc.langID;
-            }
-
+        const response = await lrclib.getMusicList(term);
+        const isEmpty = response.body.every(item => item === undefined || item === null);
+    
+        if (isEmpty) {
             return res.status(200).render("admin/search_music", {
-                message: "Music found: ",
-                musicList: jsonData.response.docs
+                musicsFound: false,
+                musicList: null
             });
-        } else {
-            return res.status(401).json({ message: "Música não encontrada" });
         }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Internal server error" });
+        if (response.success) {
+            return res.status(200).render("admin/search_music", {
+                musicsFound: true,
+                musicList: response.body
+            });
+        }
+        return res.status(response.status).json({
+            message: response.message,
+            status: response.status,
+            err: response.err ?? "Não informado"
+        });
+    } catch (err) {
+        console.log("> Internal server error: ", err);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 }
 
 // Função para obter detalhes de uma música
 const getMusic = async (id) => {
     try {
-        const music = await vagalumeService.getMusic(id);
+        const music = await lrclib.getMusic(id);
 
         if (music.success) {
             const jsonData = await music.response.json();
@@ -112,12 +112,12 @@ const getMusic = async (id) => {
 // Função para importar música
 const importMusic = async (req, res) => {
     try {
-        const get = await getMusic(req.params.id);
+        const request = await getMusic(req.params.id);
 
         const data = {
-            title: get.title,
-            author: get.author,
-            lyrics: get.lyrics,
+            title: getMusic.title,
+            author: getMusic.author,
+            lyrics: getMusic.lyrics,
             youtube_link: req.body.youtube_link
         };
 
@@ -200,7 +200,7 @@ const updateMusic = async (req, res) => {
 module.exports = {
     loginUser,
     getAllMusic,
-    searchMusic,
+    searchForMusic,
     getMusic,
     importMusic,
     deleteMusic,

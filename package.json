@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start:dev": "dotenv -e .env node ./src/server.js",
+    "start:dev": "dotenv -e .env nodemon ./src/server.js",
     "start:prod": "dotenv -e .env.production node ./src/server.js",
     "start:test": "dotenv -e .env.test node ./src/server.js"
   },

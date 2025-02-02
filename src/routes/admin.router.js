@@ -30,7 +30,7 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/music/search", verifyUser, (req, res) => {
-    adminController.searchMusic(req, res);
+    adminController.searchForMusic(req, res);
 });
 
 router.post("/music/import/:id", verifyUser, (req, res) => {
