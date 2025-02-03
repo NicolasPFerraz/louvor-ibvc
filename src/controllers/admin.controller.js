@@ -1,7 +1,7 @@
 const Admin = require("../models/Admin");
 const authService = require("../services/auth.service");
 const musicRepository = require("../repository/music.repository");
-const lrclib = require("../services/lrclib");
+const { getMusicList, getMusicById } = require("../services/lrclib");
 
 // Função para login do usuário admin
 const loginUser = async (req, res) => {
@@ -45,9 +45,9 @@ const getAllMusic = async (req, res, message = null, status = 200, success = tru
                 message: message,
                 success: success
             });
-        } else {
-            return res.status(401).json(music);
         }
+        return res.status(401).json(music);
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Internal server error" });
@@ -56,12 +56,13 @@ const getAllMusic = async (req, res, message = null, status = 200, success = tru
 
 // Função para buscar músicas utilizando uma API de terceiro
 const searchForMusic = async (req, res) => {
+
     const { term } = req.body;
 
     try {
-        const response = await lrclib.getMusicList(term);
+        const response = await getMusicList(term);
         const isEmpty = response.body.every(item => item === undefined || item === null);
-    
+
         if (isEmpty) {
             return res.status(200).render("admin/search_music", {
                 musicsFound: false,
@@ -87,58 +88,33 @@ const searchForMusic = async (req, res) => {
     }
 }
 
-// Função para obter detalhes de uma música
-const getMusic = async (id) => {
-    try {
-        const music = await lrclib.getMusic(id);
-
-        if (music.success) {
-            const jsonData = await music.response.json();
-            const data = {
-                title: jsonData.mus[0].name,
-                author: jsonData.art.name,
-                lyrics: jsonData.mus[0].text
-            };
-            return data;
-        } else {
-            return { message: music.message };
-        }
-    } catch (error) {
-        console.log(error);
-        return { message: "Internal server error" };
-    }
-}
-
 // Função para importar música
 const importMusic = async (req, res) => {
+
+    const { id } = req.params;
+    const { youtubeUrl } = req.body ?? {};
+    console.log("URL: " + youtubeUrl)
+
     try {
-        const request = await getMusic(req.params.id);
+        const response = await getMusicById(id);
 
-        const data = {
-            title: getMusic.title,
-            author: getMusic.author,
-            lyrics: getMusic.lyrics,
-            youtube_link: req.body.youtube_link
-        };
+        if (response.success) {
+            const create = await musicRepository.createMusic(response.body, youtubeUrl)
 
-        console.log(data);
-
-        const create = await musicRepository.createMusic(
-            data.title,
-            data.author,
-            data.lyrics,
-            data.youtube_link
-        );
-
-        if (!create.success) {
-            return getAllMusic(req, res, create.message, 400, false);
+            console.log("> New music imported successfully");
+            return getAllMusic(req, res, create.message, 201, true);
         }
-
-        console.log("> New music added");
-        return getAllMusic(req, res, create.message, 201, true);
+        return res.status(response.status).json({
+            message: response.message,
+            status: response.status,
+            err: response.err ?? "Não informado"
+        });
     } catch (err) {
         console.log(err);
-        res.status(500).send("Erro interno no sistema");
+        const statusCode = err.status || 500;
+        const message = err.message || err;
+
+        return res.status(statusCode).json({ message });
     }
 }
 
@@ -201,7 +177,6 @@ module.exports = {
     loginUser,
     getAllMusic,
     searchForMusic,
-    getMusic,
     importMusic,
     deleteMusic,
     updateMusicForm,

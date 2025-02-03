@@ -1,7 +1,7 @@
 const Music = require("../models/Music");
 
 // Função para criar um novo registro de música
-function convertWatchToEmbedUrl(watchUrl) {
+const convertWatchToEmbedUrl = (watchUrl) => {
 	// Usa uma expressão regular para capturar o ID do vídeo
 	const videoIdMatch = watchUrl.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/);
 
@@ -14,47 +14,33 @@ function convertWatchToEmbedUrl(watchUrl) {
 	}
 }
 
-const createMusic = async (title, author, lyrics, youtube_link) => {
-	try {
-		var embedUrl = convertWatchToEmbedUrl(youtube_link);
+const createMusic = async (responseData, youtubeUrl) => {
 
-		if (youtube_link) {
-			if (embedUrl) {
-				console.log(`URL de embed: ${embedUrl}`);
-			} else {
-				return {
-					status: 400,
-					success: false,
-					message: "Erro ao cadastrar música: formato do link do YouTube inválido"
-				}
-			}
-		}
+	const { name, artistName, plainLyrics } = responseData;
 
-		if (title == "" || author == "" || lyrics == "") {
-			return {
+	if (youtubeUrl) {
+		var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
+
+		if (!embedUrl) {
+			throw {
 				status: 400,
-				success: false,
-				message: "Erro ao cadastrar música: campos inválidos"
-			}
-		}
-
-		const music = await Music.create({ title, author, lyrics, youtube_link: embedUrl });
-
-		return {
-			status: 201,
-			success: true,
-			message: "Música cadastrada com sucesso",
-			musicIndex: music
-		}
-	} catch (error) {
-		console.log(error)
-		return {
-			status: 500,
-			success: false,
-			message: "Erro interno",
-			error: error
+				message: "Erro ao cadastrar música: link do youtube inválido"
+			};
 		}
 	}
+
+	return await Music.create({ title: name, author: artistName, lyrics: plainLyrics, youtubeUrl: embedUrl ?? '' })
+		.then((result) => {
+			return {
+				status: 201,
+				success: true,
+				message: "Música cadastrada com sucesso",
+				music: result
+			}
+		})
+		.catch(err =>{
+			throw new Error(err)
+		})
 };
 
 // Função para recuperar todos os registros de música
