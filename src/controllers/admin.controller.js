@@ -93,7 +93,6 @@ const importMusic = async (req, res) => {
 
     const { id } = req.params;
     const { youtubeUrl } = req.body ?? {};
-    console.log("URL: " + youtubeUrl)
 
     try {
         const response = await getMusicById(id);
