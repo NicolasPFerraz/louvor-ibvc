@@ -42,7 +42,8 @@
                             <hr>
                             <p id="musicUrl"></p>
                         </article>
-                        <% if (music.youtube_link) { %>
+                        
+                        <% if (music["youtube_link"]) { %>
                             <article class="video">
                                 <iframe src="<%= music.youtube_link %>" id="youtube-iframe" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -103,6 +103,7 @@ const importMusic = async (req, res) => {
             console.log("> New music imported successfully");
             return getAllMusic(req, res, create.message, 201, true);
         }
+        console.log("Ola")
         return res.status(response.status).json({
             message: response.message,
             status: response.status,

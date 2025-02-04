@@ -32,7 +32,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 		}
 	}
 
-	return await Music.create({ title: formatedName, author: artistName, lyrics: plainLyrics, youtubeUrl: embedUrl ?? '' })
+	return await Music.create({ title: formatedName, author: artistName, lyrics: plainLyrics, youtube_link: embedUrl ?? '' })
 		.then((result) => {
 			return {
 				status: 201,
@@ -50,7 +50,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 const getAllMusic = async () => {
 	try {
 		const music = await Music.findAll({
-			attributes: ['title', 'author', 'id'], // Seleciona apenas a coluna 'title' e 'author'
+			attributes: ['title', 'author', 'id'], // Seleciona apenas a coluna 'title', 'author' e 'id'
 			order: [
 				['title', 'ASC'] // ASC para ordenação ascendente, DESC para ordenação descendente
 			],
