@@ -55,22 +55,22 @@
                                     </article>
                                     <% } %>
                 </section>
-                <script type="text/javascript">
-                    /*document.addEventListener('DOMContentLoaded', function () {
-                        // Obtém as strings diretamente
-                        const musicName = "<%= music['title'] %>";
-                        const authorName = "<%= music['author'] %>";
-                
-                        // Substitui espaços por traços e converte para minúsculas
-                        const formatedMusicName = musicName.replace(/\s+/g, '-').toLowerCase();
-                        const formatedAuthorName = authorName.replace(/\s+/g, '-').toLowerCase();
-                
-                        // Cria a URL formatada
-                        const url = `https://vagalume.com.br/${formatedAuthorName}/${formatedMusicName}`;
-                
-                        // Insere a URL no elemento HTML
-                        const musicUrl = document.getElementById('musicUrl');
-                        musicUrl.innerHTML = `Veja mais sobre a música <a href="${url}">aqui</a>`;
-                    });*/
-                </script>
-                <%- include('footer'); %>
+<script type="text/javascript">
+    /*document.addEventListener('DOMContentLoaded', function () {
+        // Obtém as strings diretamente
+        const musicName = "<%= music['title'] %>";
+        const authorName = "<%= music['author'] %>";
+
+        // Substitui espaços por traços e converte para minúsculas
+        const formatedMusicName = musicName.replace(/\s+/g, '-').toLowerCase();
+        const formatedAuthorName = authorName.replace(/\s+/g, '-').toLowerCase();
+
+        // Cria a URL formatada
+        const url = `https://vagalume.com.br/${formatedAuthorName}/${formatedMusicName}`;
+
+        // Insere a URL no elemento HTML
+        const musicUrl = document.getElementById('musicUrl');
+        musicUrl.innerHTML = `Veja mais sobre a música <a href="${url}">aqui</a>`;
+    });*/
+</script>
+<%- include('footer'); %>

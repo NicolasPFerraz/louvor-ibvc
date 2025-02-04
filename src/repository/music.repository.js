@@ -14,9 +14,12 @@ const convertWatchToEmbedUrl = (watchUrl) => {
 	}
 }
 
+const convertSlashToDash = (name) => { return name.replace('/', '-') }
+
 const createMusic = async (responseData, youtubeUrl) => {
 
 	const { name, artistName, plainLyrics } = responseData;
+	const formatedName = convertSlashToDash(name);
 
 	if (youtubeUrl) {
 		var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
@@ -29,7 +32,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 		}
 	}
 
-	return await Music.create({ title: name, author: artistName, lyrics: plainLyrics, youtubeUrl: embedUrl ?? '' })
+	return await Music.create({ title: formatedName, author: artistName, lyrics: plainLyrics, youtubeUrl: embedUrl ?? '' })
 		.then((result) => {
 			return {
 				status: 201,
