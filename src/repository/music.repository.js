@@ -41,7 +41,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 				music: result
 			}
 		})
-		.catch(err =>{
+		.catch(err => {
 			throw new Error(err)
 		})
 };
@@ -124,9 +124,21 @@ const getMusicByTitle = async (title) => {
 };
 
 // Função para atualizar um registro de música
-const updateMusic = async (id, title, author, lyrics) => {
+const updateMusic = async (id, title, author, lyrics, youtubeUrl) => {
 	try {
 		const music = await getMusicById(id);
+
+		if (youtubeUrl) {
+			var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
+
+			if (!embedUrl) {
+				throw {
+					status: 400,
+					message: "Erro ao cadastrar música: link do youtube inválido"
+				};
+			}
+		}
+
 		if (!music) {
 			return {
 				status: 404,
@@ -134,13 +146,14 @@ const updateMusic = async (id, title, author, lyrics) => {
 				message: "Registro de música não encontrado"
 			}
 		}
-		await Music.update({ title, author, lyrics }, { where: { id } });
+		await Music.update({ title, author, lyrics, youtube_link: embedUrl ?? youtubeUrl ?? null }, { where: { id } });
 		return {
 			status: 200,
 			success: true,
 			musicIndex: music
 		}
 	} catch (error) {
+		console.log(error)
 		return {
 			status: 500,
 			success: false,
