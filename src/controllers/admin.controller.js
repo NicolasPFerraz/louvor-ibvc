@@ -103,6 +103,7 @@ const importMusic = async (req, res) => {
             console.log("> New music imported successfully");
             return getAllMusic(req, res, create.message, 201, true);
         }
+        console.log("Ola")
         return res.status(response.status).json({
             message: response.message,
             status: response.status,
@@ -145,16 +146,18 @@ const updateMusicForm = async (req, res) => {
 }
 
 const updateMusic = async (req, res) => {
-    const { title, author, lyrics, youtube_link } = req.body;
+    const { title, author, lyrics, youtubeUrl } = req.body;
     const { id } = req.params;
 
     try {
         const music = await musicRepository.getMusicById(id);
+        console.log("Youtube URL: " + youtubeUrl)
+
         if (!music) {
             return res.status(404).json({ success: false, message: music.message });
         }
 
-        const updatedMusic = await musicRepository.updateMusic(id, title, author, lyrics, youtube_link);
+        const updatedMusic = await musicRepository.updateMusic(id, title, author, lyrics, youtubeUrl);
 
         if (updatedMusic.success) {
             return getAllMusic(req, res, "Música editada com sucesso", 200)
@@ -162,7 +165,7 @@ const updateMusic = async (req, res) => {
             return res.status(400).render("admin/edit_music", {
                 success: false,
                 message: "Campos inválidos",
-                music: { title, author, lyrics, youtube_link }
+                music: { id, title, author, lyrics, youtubeUrl }
             });
         }
     } catch (error) {

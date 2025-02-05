@@ -10,6 +10,7 @@
                 <% } %>
         </article>
         <article class="edit-music-form">
+
             <form action="/admin/music/edit/<%= music.id %>" method="POST">
                 <div class="form-group">
                     <label for="title">Título</label>
@@ -25,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="youtube_link">Link do Youtube</label>
-                    <input type="url" id="youtube_link" name="youtube_link" value="<%= music.youtube_link %>">
+                    <input type="url" id="youtube_link" name="youtubeUrl" value="<%= music.youtube_link %>">
                 </div>
                 <button type="submit" class="btn-submit">Confirmar alterações</button>
             </form>

@@ -14,9 +14,12 @@ const convertWatchToEmbedUrl = (watchUrl) => {
 	}
 }
 
+const convertSlashToDash = (name) => { return name.replace('/', '-') }
+
 const createMusic = async (responseData, youtubeUrl) => {
 
 	const { name, artistName, plainLyrics } = responseData;
+	const formatedName = convertSlashToDash(name);
 
 	if (youtubeUrl) {
 		var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
@@ -29,7 +32,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 		}
 	}
 
-	return await Music.create({ title: name, author: artistName, lyrics: plainLyrics, youtubeUrl: embedUrl ?? '' })
+	return await Music.create({ title: formatedName, author: artistName, lyrics: plainLyrics, youtube_link: embedUrl ?? '' })
 		.then((result) => {
 			return {
 				status: 201,
@@ -38,7 +41,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 				music: result
 			}
 		})
-		.catch(err =>{
+		.catch(err => {
 			throw new Error(err)
 		})
 };
@@ -47,7 +50,7 @@ const createMusic = async (responseData, youtubeUrl) => {
 const getAllMusic = async () => {
 	try {
 		const music = await Music.findAll({
-			attributes: ['title', 'author', 'id'], // Seleciona apenas a coluna 'title' e 'author'
+			attributes: ['title', 'author', 'id'], // Seleciona apenas a coluna 'title', 'author' e 'id'
 			order: [
 				['title', 'ASC'] // ASC para ordenação ascendente, DESC para ordenação descendente
 			],
@@ -121,9 +124,21 @@ const getMusicByTitle = async (title) => {
 };
 
 // Função para atualizar um registro de música
-const updateMusic = async (id, title, author, lyrics) => {
+const updateMusic = async (id, title, author, lyrics, youtubeUrl) => {
 	try {
 		const music = await getMusicById(id);
+
+		if (youtubeUrl) {
+			var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
+
+			if (!embedUrl) {
+				throw {
+					status: 400,
+					message: "Erro ao cadastrar música: link do youtube inválido"
+				};
+			}
+		}
+
 		if (!music) {
 			return {
 				status: 404,
@@ -131,13 +146,14 @@ const updateMusic = async (id, title, author, lyrics) => {
 				message: "Registro de música não encontrado"
 			}
 		}
-		await Music.update({ title, author, lyrics }, { where: { id } });
+		await Music.update({ title, author, lyrics, youtube_link: embedUrl ?? youtubeUrl ?? null }, { where: { id } });
 		return {
 			status: 200,
 			success: true,
 			musicIndex: music
 		}
 	} catch (error) {
+		console.log(error)
 		return {
 			status: 500,
 			success: false,
