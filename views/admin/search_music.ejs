@@ -116,7 +116,10 @@
 <%- include('../header'); %>
     <section>
         <article>
-            <% if (musicsFound) { %>
+            <% if (typeof message !== 'undefined') { %>
+                <p id="message"><b><%= message %></b></p>
+            <% } %>
+            <% if (musicList) { %>
                 <h2>Músicas encontradas</h2>
                 <hr>
                 <ul>

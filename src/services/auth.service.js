@@ -15,24 +15,35 @@ const generateToken = async (admin, password) => {
     };
 
     // Generate JWT token
-    console.log(payload)
     const token = jwt.sign(payload, secretKey, options);
     return token;
 }
 
 module.exports = async (username, password) => {
+    try {
+        // Buscar o administrador no banco
+        const admin = await Admin.findOne({ where: { username: username } });
 
-    const admin = await Admin.findOne({ where: { username: username } });
+        if (!admin) {
+            return { success: false, admin: false };
+        }
 
-    if (!admin) {
-        return { success: false, admin: false }
+        // Verificar se a senha é válida
+        const isPassValid = await bcrypt.compare(password, admin.password);
+
+        if (!isPassValid) {
+            return { success: false, admin: false };
+        }
+
+        // Gerar o token de autenticação
+        const token = await generateToken(admin, admin.password);
+
+        console.log('> Novo usuário autenticado')
+        return { success: true, admin: admin, token: token };
+
+    } catch (error) {
+        // Lidar com erros inesperados (ex: problemas no banco, hashing ou geração de token)
+        console.error("> Erro ao autenticar usuário: " + error);
+        return { success: false, error: "Erro interno no servidor" };  // Retorne uma mensagem genérica de erro
     }
-
-    const isPassValid = await bcrypt.compare(password, admin.password);
-
-    if (!isPassValid) {
-        return { success: false, admin: false }
-    }
-    const token = await generateToken(admin, admin.password);
-    return { success: true, admin: admin, token: token }
 }

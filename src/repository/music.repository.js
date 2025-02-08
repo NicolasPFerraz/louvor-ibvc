@@ -23,13 +23,6 @@ const createMusic = async (responseData, youtubeUrl) => {
 
 	if (youtubeUrl) {
 		var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
-
-		if (!embedUrl) {
-			throw {
-				status: 400,
-				message: "Erro ao cadastrar música: link do youtube inválido"
-			};
-		}
 	}
 
 	return await Music.create({ title: formatedName, author: artistName, lyrics: plainLyrics, youtube_link: embedUrl ?? '' })
@@ -49,25 +42,17 @@ const createMusic = async (responseData, youtubeUrl) => {
 // Função para recuperar todos os registros de música
 const getAllMusic = async () => {
 	try {
-		const music = await Music.findAll({
+		const musicsFound = await Music.findAll({
 			attributes: ['title', 'author', 'id'], // Seleciona apenas a coluna 'title', 'author' e 'id'
 			order: [
 				['title', 'ASC'] // ASC para ordenação ascendente, DESC para ordenação descendente
 			],
 			raw: true,
 		});
-		return {
-			status: 200,
-			success: true,
-			musicIndex: music
-		}
+		return { success: true, list: musicsFound };
 	} catch (error) {
-		return {
-			status: 500,
-			success: false,
-			message: "Erro ao recuperar registros de música",
-			error: error
-		}
+		console.error("> Erro ao retornar todas as músicas:" + error);
+		return { success: false, error: "Erro ao recuperar registros de música", }
 	}
 };
 
@@ -128,17 +113,6 @@ const updateMusic = async (id, title, author, lyrics, youtubeUrl) => {
 	try {
 		const music = await getMusicById(id);
 
-		if (youtubeUrl) {
-			var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
-
-			if (!embedUrl) {
-				throw {
-					status: 400,
-					message: "Erro ao cadastrar música: link do youtube inválido"
-				};
-			}
-		}
-
 		if (!music) {
 			return {
 				status: 404,
@@ -146,6 +120,11 @@ const updateMusic = async (id, title, author, lyrics, youtubeUrl) => {
 				message: "Registro de música não encontrado"
 			}
 		}
+		
+		if (youtubeUrl) {
+			var embedUrl = convertWatchToEmbedUrl(youtubeUrl);
+		}
+
 		await Music.update({ title, author, lyrics, youtube_link: embedUrl ?? youtubeUrl ?? null }, { where: { id } });
 		return {
 			status: 200,
@@ -165,21 +144,20 @@ const updateMusic = async (id, title, author, lyrics, youtubeUrl) => {
 
 // Função para deletar um registro de música
 const deleteMusic = async (id) => {
+
 	try {
 		const music = await getMusicById(id);
+
 		if (!music) {
 			return {
-				status: 404,
 				success: false,
+				status: 400,
 				message: "Registro de música não encontrado"
 			}
 		}
 		await Music.destroy({ where: { id } });
-		return {
-			status: 200,
-			success: true,
-			musicIndex: music
-		}
+		return { success: true, status: 200, message: "Música deletada com sucesso" }
+
 	} catch (error) {
 		console.log(error)
 		return {

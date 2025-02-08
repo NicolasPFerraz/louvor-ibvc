@@ -1,5 +1,6 @@
-const { Sequelize, DataTypes } = require("sequelize");
-require("dotenv").config()
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
+
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -9,13 +10,14 @@ const sequelize = new Sequelize(
         dialect: 'mariadb',
         logging: false
     }
-);
+)
 
 const authenticate = async () => {
     try {
-        await sequelize.authenticate().then(() => {
-            console.log("> Conexão com o banco de dados feita com sucesso");
-        });
+        await sequelize.authenticate()
+            .then(() => {
+                console.log("> Conexão com o banco de dados feita com sucesso");
+            });
     } catch (err) {
         console.log("> [ERRO] Não foi possível conectar ao banco de dados: ", err);
     }

@@ -36,6 +36,7 @@ adminRepository.createAdminUser();
 
 // listen the server 
 server.listen(port, () => {
+    console.log('================================')
     console.log(`> Ambiente: ${process.env.NODE_ENV}`);
     console.log(`> Servidor rodando na ${host}:${port}`);
 });

@@ -26,7 +26,7 @@ router.get("/music/edit/:id", verifyUser, (req, res) => {
 // POST routes
 
 router.post("/login", (req, res) => {
-    adminController.loginUser(req, res);
+    adminController.handleLogin(req, res);
 });
 
 router.post("/music/search", verifyUser, (req, res) => {
